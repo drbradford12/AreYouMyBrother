@@ -10,7 +10,7 @@ nba_player_url <- "https://stats.gleague.nba.com/stats/leaguedashplayerstatscomb
 
 
 # Fetch the webpage content
-webpage <- read_html(url)
+webpage <- read_html(assign_url)
 
 # Extract table data (example for extracting a stats table)
 stats_table <- webpage %>%
@@ -22,9 +22,9 @@ assignment_players <- stats_table %>%
   filter(DaysAssigned > 0) %>%
   unique()
 
-reg_seaon_players <- getDatafromWebsite(nba_player_url)
+reg_season_players <- getDatafromWebsite(nba_player_url)
 
-list_of_assignment_players <- reg_seaon_players %>%
+list_of_assignment_players <- reg_season_players %>%
   select(PLAYER_NAME, TEAM_ID, TEAM_ABBREVIATION, GP, MIN, PTS) %>%
   filter(PLAYER_NAME %in% assignment_players$Player)
 
