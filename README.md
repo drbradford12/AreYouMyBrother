@@ -1,5 +1,5 @@
 
-# Are You My Brother?: Identifying NBA Teams who use their G-League Affiliate Strategically
+# Are You My Brother?: Identifying NBA Teams Who Use Their G-League Affiliate Strategically
 
 <!-- badges: start -->
 <!-- badges: end -->
