@@ -98,7 +98,8 @@ final_data <- c()
 for (i in list_of_seasons){
   tmp <- getDatafromWebsite(pull_boxscore(season_year = i)) %>%
     select(TEAM_ID, `W%` = W_PCT, ORTG = E_OFF_RATING, DRTG = E_DEF_RATING, NRTG = E_NET_RATING, AST_TO,
-           `OREB%` = OREB_PCT, Pace = E_PACE, `TOV%` = TM_TOV_PCT, `eFG%` = EFG_PCT, `TS%` = TS_PCT) %>%
+           `OREB%` = OREB_PCT, Pace = E_PACE, `TOV%` = TM_TOV_PCT, `eFG%` = EFG_PCT, `TS%` = TS_PCT,
+           `REB%` = REB_PCT, `DREB%` = DREB_PCT,`OREB%` = OREB_PCT) %>%
     #select(TEAM_ID, W_PCT:PTS) %>%
     mutate(season_year = i)
 
@@ -134,7 +135,8 @@ nba_final_data <- c()
 for (i in list_of_seasons){
   tmp1 <- getDatafromWebsite(pull_boxscore(season_year = i, league_id = "00")) %>%
     select(TEAM_ID, `W%` = W_PCT, ORTG = E_OFF_RATING, DRTG = E_DEF_RATING, NRTG = E_NET_RATING, AST_TO,
-           `OREB%` = OREB_PCT, Pace = E_PACE, `TOV%` = TM_TOV_PCT, `eFG%` = EFG_PCT, `TS%` = TS_PCT) %>%
+           `OREB%` = OREB_PCT, Pace = E_PACE, `TOV%` = TM_TOV_PCT, `eFG%` = EFG_PCT, `TS%` = TS_PCT,
+           `REB%` = REB_PCT, `DREB%` = DREB_PCT,`OREB%` = OREB_PCT) %>%
     #select(TEAM_ID, W_PCT:PTS) %>%
     mutate(season_year = i)
 
@@ -158,3 +160,11 @@ nba_season_data <- nba_final_data %>%
   filter(!is.na(gleague_team_abbreviation))
 
 
+nba_season_data_assign <- nba_season_data %>%
+  left_join(gleague_team_assign_count, by = c("gleague_team_abbreviation"= "TEAM_ABBREVIATION")) %>%
+  mutate(assign_avg_mins = ifelse(is.na(avg_mins), 0.0, avg_mins ),
+         assign_avg_pts = ifelse(is.na(avg_pts), 0.0, avg_pts ),
+         assign_avg_gp = ifelse(is.na(avg_gp), 0.0, avg_gp ),
+         num_assign_players = ifelse(is.na(num_assign_players), 0, num_assign_players)
+  ) %>%
+  select(-c(avg_mins, avg_pts, avg_gp))

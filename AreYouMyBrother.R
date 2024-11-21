@@ -10,13 +10,13 @@ source("Utils/data_pull.R")
 # Step 2: Preprocess Data
 # Combine data, normalize metrics for fair comparison
 combined_data <- bind_rows(
-  nba_season_data,
-  season_data
+  nba_season_data_assign,
+  season_data_assign
 )
 
 # Normalize metrics for clustering
 normalized_data <- combined_data %>%
-  select(-nba_team_abbreviation, -gleague_team_abbreviation, -league_type, -season_year, -TEAM_ID) %>%
+  select(-nba_team_abbreviation, -gleague_team_abbreviation, -league_type, -season_year, -TEAM_ID, -TEAM_ID.x, -TEAM_ID.y) %>%
   scale()
 
 # Step 3: Perform Clustering
@@ -34,11 +34,33 @@ gleague_clusters <- combined_data %>%
   filter(league_type == "G-League") %>%
   select(nba_team_abbreviation, gleague_team_abbreviation, Cluster)
 
+
+cluster_summary <- combined_data %>%
+  group_by(Cluster) %>%
+  summarise(
+    Count = n(),
+    Avg_Pace = mean(Pace, na.rm = TRUE),
+    Avg_Off_Rating = mean(ORTG, na.rm = TRUE),
+    Avg_Def_Rating = mean(DRTG, na.rm = TRUE),
+    Avg_3P_Arate = mean(`FGA_3PT%`, na.rm = TRUE),
+    Avg_AST_TO_Rate = mean(AST_TO, na.rm = TRUE),
+    Avg_Rebound_Rate = mean(`REB%`, na.rm = TRUE)
+  )
+
 # Merge to align NBA teams with their affiliates
 aligned_data <- nba_clusters %>%
   rename(NBA_Cluster = Cluster) %>%
   inner_join(gleague_clusters %>%
                rename(GLeague_Cluster = Cluster))
+
+# Compare Distribution by League (NBA vs. G-League)
+league_cluster_distribution <- combined_data %>%
+  group_by(league_type, Cluster) %>%
+  summarise(Team_Count = n()) %>%
+  pivot_wider(names_from = Cluster, values_from = Team_Count, values_fill = 0)
+
+# Display the distribution of clusters by league
+print(league_cluster_distribution)
 
 # Step 5: Measure Alignment
 aligned_data <- aligned_data %>%
@@ -46,7 +68,7 @@ aligned_data <- aligned_data %>%
 
 # Calculate alignment percentage
 alignment_percentage <- mean(aligned_data$Aligned) * 100
-print(paste("Alignment Percentage:", alignment_percentage, "%"))
+print(paste("Alignment Percentage:", round(alignment_percentage, 3), "%"))
 
 # Step 6: Statistical Testing
 # Hypothesis Test: Compare NBA vs. G-League styles
