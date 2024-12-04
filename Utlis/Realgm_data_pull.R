@@ -4,6 +4,15 @@ library(httr)
 library(dplyr)
 library(magrittr)
 
+getDatafromWebsite <- function(url_link){
+  res <- httr::GET(url = url_link)
+  data <- httr::content(res) %>% .[['resultSets']] %>% .[[1]]
+  column_names <- data$headers %>% as.character()
+  dt <- rbindlist(data$rowSet) %>% setnames(column_names)
+
+  return(dt)
+}
+
 # Define the URL of the page you want to scrape
 assign_url <- "https://basketball.realgm.com/gleague/transactions/assignments/2024"
 nba_player_url <- "https://stats.gleague.nba.com/stats/leaguedashplayerstatscombined?College=&Conference=&Country=&DateFrom=&DateTo=&Division=&DraftPick=&DraftYear=&GameScope=&GameSegment=&Height=&LastNGames=0&LeagueID=20&Location=&MeasureType=Base&Month=0&OpponentTeamID=0&Outcome=&PORound=0&PaceAdjust=N&PerMode=PerGame&Period=0&PlayerExperience=&PlayerPosition=&PlusMinus=N&Rank=N&Season=2023-24&SeasonSegment=&SeasonType=Regular+Season&ShotClockRange=&StarterBench=&TeamID=0&TwoWay=0&VsConference=&VsDivision=&Weight="

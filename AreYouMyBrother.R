@@ -5,7 +5,7 @@ library(factoextra)  # For PCA visualization
 library(corrplot)  # For correlation analysis
 
 # Step 1: Load Data
-source("Utils/data_pull.R")
+source(here::here('Utlis', 'data_pull.R'))
 
 # Step 2: Preprocess Data
 # Combine data, normalize metrics for fair comparison

@@ -3,7 +3,8 @@ library(httr)
 library(data.table)
 library(hoopR)
 
-source("Utlis/Realgm_data_pull.R")
+source(here::here('Utlis', 'Realgm_data_pull.R'))
+#source("Utlis/Realgm_data_pull.R")
 
 pull_shooting <- function(season_type = "Regular+Season", season_year = "2023-24", league_id = "20"){
   url <- paste('https://stats.gleague.nba.com/stats/leaguedashteamshotlocations?Conference=&DateFrom=&DateTo=&DistanceRange=By+Zone&Division=&GameScope=&GameSegment=&LastNGames=0&LeagueID=',league_id,
@@ -114,6 +115,25 @@ for (i in list_of_seasons){
   final_data <- final_data %>%
     bind_rows(tmp)
 }
+
+
+# Function to create lag for a variable over 3 years
+create_lag_3_years <- function(data, variable_name) {
+  data %>%
+    group_by(TEAM_ID) %>%
+    arrange(TEAM_ID, season_year) %>%
+    mutate(
+      !!paste0(variable_name, "_lag_1") := lag(.data[[variable_name]], 1),
+      !!paste0(variable_name, "_lag_2") := lag(.data[[variable_name]], 2),
+      !!paste0(variable_name, "_lag_3") := lag(.data[[variable_name]], 3)
+    ) %>%
+    ungroup() %>%
+    select(contains("_lag_"), TEAM_ID, season_year)
+}
+
+# Example usage: create lag for 'Pace'
+data_with_lags <- create_lag_3_years(final_data, 'Pace') %>%
+
 
 season_data <- final_data %>%
   mutate(league_type = "G-League") %>%
