@@ -12,6 +12,8 @@ gl_playing_styles <- final_data %>%
       `UAST_FGM%` > .10 & `AST%` < .50 ~ "Iso-Heavy", # Unassisted 2PM% as an iso proxy?
       `PAINT_PTS%` > .50 & `OREB%` > .30 ~ "Big-Man Centric",
       `AST%` > .60 ~ "Motion Offense",
+      #`Opp_eFG%` < .4 ~ "Switch-Heavy Defense",
+      # `PAINT_PTS%` > .4 & ~ "Post-Up and Inside",
       DRTG < 110 & `OREB%` > .30 ~ "Grit-and-Grind",
       TRUE ~ "Balanced/Adaptive"  # Default
     )

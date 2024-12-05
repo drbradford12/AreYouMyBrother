@@ -4,7 +4,6 @@ library(data.table)
 library(hoopR)
 
 source(here::here('Utlis', 'Realgm_data_pull.R'))
-#source("Utlis/Realgm_data_pull.R")
 
 pull_shooting <- function(season_type = "Regular+Season", season_year = "2023-24", league_id = "20"){
   url <- paste('https://stats.gleague.nba.com/stats/leaguedashteamshotlocations?Conference=&DateFrom=&DateTo=&DistanceRange=By+Zone&Division=&GameScope=&GameSegment=&LastNGames=0&LeagueID=',league_id,
@@ -22,6 +21,14 @@ pull_scoring <- function(season_type = "Regular+Season", season_year = "2023-24"
   return(url)
 }
 
+pull_four_factors <- function(season_type = "Regular+Season", season_year = "2023-24", league_id = "20"){
+  url <- paste('https://stats.gleague.nba.com/stats/leaguedashteamstatscombined?Conference=&DateFrom=&DateTo=&Division=&GameScope=&GameSegment=&LastNGames=0&LeagueID=',
+               league_id, '&Location=&MeasureType=Four+Factors&Month=0&OpponentTeamID=0&Outcome=&PORound=0&PaceAdjust=N&PerMode=PerGame&Period=0&PlayerExperience=&PlayerPosition=&PlusMinus=N&Rank=N&Season=',
+               season_year,'&SeasonSegment=&SeasonType=',
+               season_type ,'&ShotClockRange=&StarterBench=&TeamID=0&TwoWay=0&VsConference=&VsDivision=',sep='')
+  return(url)
+}
+
 pull_boxscore <- function(season_type = "Regular+Season", season_year = "2023-24", league_id = "20"){
   url <- paste('https://stats.gleague.nba.com/stats/leaguedashteamstatscombined?Conference=&DateFrom=&DateTo=&Division=&GameScope=&GameSegment=&LastNGames=0&LeagueID=',league_id,
                '&Location=&MeasureType=Advanced&Month=0&OpponentTeamID=0&Outcome=&PORound=0&PaceAdjust=N&PerMode=PerGame&Period=0&PlayerExperience=&PlayerPosition=&PlusMinus=N&Rank=N&Season=',
@@ -30,8 +37,16 @@ pull_boxscore <- function(season_type = "Regular+Season", season_year = "2023-24
   return(url)
 }
 
+pull_violations <- function(season_type = "Regular+Season", season_year = "2023-24", league_id = "20"){
+  url <- paste('https://stats.gleague.nba.com/stats/leaguedashteamstats?Conference=&DateFrom=&DateTo=&Division=&GameScope=&GameSegment=&Height=&ISTRound=&LastNGames=0&LeagueID=',league_id,
+               '&Location=&MeasureType=Violations&Month=0&OpponentTeamID=0&Outcome=&PORound=0&PaceAdjust=N&PerMode=PerGame&Period=0&PlayerExperience=&PlayerPosition=&PlusMinus=N&Rank=N&Season=',
+               season_year,'&SeasonSegment=&SeasonType=',season_type,
+               '&ShotClockRange=&StarterBench=&TeamID=0&TwoWay=0&VsConference=&VsDivision=', sep ="")
+  return(url)
+}
+
 getDatafromWebsite <- function(url_link){
-  res <- httr::GET(url = url_link)
+  res <- httr::GET(url = url_link, timeout(2))
   data <- httr::content(res) %>% .[['resultSets']] %>% .[[1]]
   column_names <- data$headers %>% as.character()
   dt <- rbindlist(data$rowSet) %>% setnames(column_names)
@@ -62,20 +77,20 @@ getDatafromWebsiteShooting <- function(url_link){
   return(dt)
 }
 
-cleanScoringData <- function(dframe, team_name){
-  tmp <- dframe %>%
-    filter(TEAM_NAME == team_name) %>%
-    select(TEAM_NAME, `2PT Attempt` = PCT_FGA_2PT, `3PT Attempt` = PCT_FGA_3PT,
-           `Paint PTS Made` = PCT_PTS_2PT,`Midrange PTS Made` = PCT_PTS_2PT_MR,`3PTS Made` = PCT_PTS_3PT,
-           `Fast Break` = PCT_PTS_FB, `Free Throw` = PCT_PTS_FT,`Off TOV` = PCT_PTS_OFF_TOV,
-           `In Paint` = PCT_PTS_PAINT,`Assisted 2PT` = PCT_AST_2PM, `Unassisted 2PT` = PCT_UAST_2PM,
-           `Assisted 3PT` = PCT_AST_3PM, `Unassisted 3PT` = PCT_UAST_3PM
+# Function to create lag for a variable over 3 years
+create_lag_3_years <- function(data, variable_name) {
+  data %>%
+    group_by(TEAM_ID) %>%
+    arrange(TEAM_ID, season_year) %>%
+    mutate(
+      !!paste0(variable_name, "_lag_1") := lag(.data[[variable_name]], 1),
+      !!paste0(variable_name, "_lag_2") := lag(.data[[variable_name]], 2),
+      !!paste0(variable_name, "_lag_3") := lag(.data[[variable_name]], 3)
     ) %>%
-    pivot_longer(!c(TEAM_NAME), names_to = "Scoring (% of Points)", values_to = "Value") %>%
-    select(-TEAM_NAME)
-
-  return(tmp)
+    ungroup() %>%
+    select(contains("_lag_"), TEAM_ID, season_year)
 }
+
 
 player_profile_url <- 'https://stats.gleague.nba.com/stats/leaguedashplayerbiostats?College=&Conference=&Country=&DateFrom=&DateTo=&Division=&DraftPick=&DraftYear=&GameScope=&GameSegment=&Height=&LastNGames=0&LeagueID=20&Location=&Month=0&OpponentTeamID=0&Outcome=&PORound=0&PerMode=PerGame&Period=0&PlayerExperience=&PlayerPosition=&Season=2023-24&SeasonSegment=&SeasonType=Regular+Season&ShotClockRange=&StarterBench=&TeamID=0&VsConference=&VsDivision=&Weight='
 
@@ -91,7 +106,7 @@ nba_g_map_winners <- read.csv("ManualMapping/GLeague_to_NBA_map_winners.csv", he
 
 
 # Create the season boxscores into one table
-list_of_seasons <- c('2013-14','2014-15','2015-16','2016-17','2017-18', '2018-19', '2019-20','2020-21','2021-22', '2022-23', '2023-24')
+list_of_seasons <- c('2013-14','2014-15','2015-16','2016-17','2017-18', '2018-19', '2019-20', '2020-21','2021-22', '2022-23', '2023-24')
 
 
 final_data <- c()
@@ -109,30 +124,22 @@ for (i in list_of_seasons){
            `FB_PTS%` = PCT_PTS_FB, `FT_PTS%` = PCT_PTS_FT, `OFF_TOV_PTS%` = PCT_PTS_OFF_TOV,
            `PAINT_PTS%` = PCT_PTS_PAINT, `AST_2PM%` = PCT_AST_2PM, `AST_3PM%` =  PCT_AST_3PM)
 
+  tmp3 <- getDatafromWebsite(pull_four_factors(season_year = i)) %>%
+    select(TEAM_ID, `Opp_eFG%` = OPP_EFG_PCT, `OPP_FTr`= OPP_FTA_RATE)
+
+  tmp4 <- getDatafromWebsite(pull_violations(season_year = i)) %>%
+    select(TEAM_ID, SHOT_CLOCK, OFF_FOUL, EIGHT_SEC, CHARGE)
+
   tmp <- tmp %>%
-    left_join(tmp2, by = "TEAM_ID")
+    left_join(tmp2, by = "TEAM_ID") %>%
+    left_join(tmp3, by = "TEAM_ID") %>%
+    left_join(tmp4, by = "TEAM_ID")
 
   final_data <- final_data %>%
     bind_rows(tmp)
 }
 
 
-# Function to create lag for a variable over 3 years
-create_lag_3_years <- function(data, variable_name) {
-  data %>%
-    group_by(TEAM_ID) %>%
-    arrange(TEAM_ID, season_year) %>%
-    mutate(
-      !!paste0(variable_name, "_lag_1") := lag(.data[[variable_name]], 1),
-      !!paste0(variable_name, "_lag_2") := lag(.data[[variable_name]], 2),
-      !!paste0(variable_name, "_lag_3") := lag(.data[[variable_name]], 3)
-    ) %>%
-    ungroup() %>%
-    select(contains("_lag_"), TEAM_ID, season_year)
-}
-
-# Example usage: create lag for 'Pace'
-data_with_lags <- create_lag_3_years(final_data, 'Pace') %>%
 
 
 season_data <- final_data %>%
@@ -165,8 +172,16 @@ for (i in list_of_seasons){
            `FB_PTS%` = PCT_PTS_FB, `FT_PTS%` = PCT_PTS_FT, `OFF_TOV_PTS%` = PCT_PTS_OFF_TOV,
            `PAINT_PTS%` = PCT_PTS_PAINT, `AST_2PM%` = PCT_AST_2PM, `AST_3PM%` =  PCT_AST_3PM)
 
+  tmp3 <- getDatafromWebsite(pull_four_factors(season_year = i, league_id = "00")) %>%
+    select(TEAM_ID, `Opp_eFG%` = OPP_EFG_PCT, `OPP_FTr`= OPP_FTA_RATE)
+
+  tmp4 <- getDatafromWebsite(pull_violations(season_year = i, league_id = "00")) %>%
+    select(TEAM_ID, SHOT_CLOCK, OFF_FOUL, EIGHT_SEC, CHARGE)
+
   tmp <- tmp1 %>%
-    left_join(tmp2, by = "TEAM_ID")
+    left_join(tmp2, by = "TEAM_ID") %>%
+    left_join(tmp3, by = "TEAM_ID") %>%
+    left_join(tmp4, by = "TEAM_ID")
 
 
   nba_final_data <- nba_final_data %>%
