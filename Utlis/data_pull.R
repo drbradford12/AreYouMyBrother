@@ -46,7 +46,7 @@ pull_violations <- function(season_type = "Regular+Season", season_year = "2023-
 }
 
 getDatafromWebsite <- function(url_link){
-  res <- httr::GET(url = url_link, timeout(2))
+  res <- httr::GET(url = url_link, timeout(3))
   data <- httr::content(res) %>% .[['resultSets']] %>% .[[1]]
   column_names <- data$headers %>% as.character()
   dt <- rbindlist(data$rowSet) %>% setnames(column_names)
@@ -101,9 +101,11 @@ gleague_teams <- getDatafromWebsite(player_profile_url) %>%
 nba_teams <- nba_teams() %>%
   select(team_id, team_abbreviation)
 
-nba_g_map <- read.csv("ManualMapping/GLeague_to_NBA_map.csv", header = TRUE)
-nba_g_map_winners <- read.csv("ManualMapping/GLeague_to_NBA_map_winners.csv", header = TRUE)
+#nba_g_map <- read.csv("ManualMapping/GLeague_to_NBA_map.csv", header = TRUE)
+nba_g_map <- read.csv(here::here('ManualMapping', 'GLeague_to_NBA_map.csv'), header=TRUE)
 
+#nba_g_map_winners <- read.csv("ManualMapping/GLeague_to_NBA_map_winners.csv", header = TRUE)
+nba_g_map_winners <- read.csv(here::here('ManualMapping', 'GLeague_to_NBA_map_winners.csv'), header=TRUE)
 
 # Create the season boxscores into one table
 list_of_seasons <- c('2013-14','2014-15','2015-16','2016-17','2017-18', '2018-19', '2019-20', '2020-21','2021-22', '2022-23', '2023-24')
@@ -115,31 +117,35 @@ for (i in list_of_seasons){
   tmp <- getDatafromWebsite(pull_boxscore(season_year = i)) %>%
     select(TEAM_ID, `W%` = W_PCT, ORTG = E_OFF_RATING, DRTG = E_DEF_RATING, NRTG = E_NET_RATING, AST_TO,
            `OREB%` = OREB_PCT, Pace = E_PACE, `TOV%` = TM_TOV_PCT, `eFG%` = EFG_PCT, `TS%` = TS_PCT,
-           `REB%` = REB_PCT, `DREB%` = DREB_PCT,`OREB%` = OREB_PCT) %>%
+           `REB%` = REB_PCT, `DREB%` = DREB_PCT,`OREB%` = OREB_PCT, `AST%` = AST_PCT) %>%
     #select(TEAM_ID, W_PCT:PTS) %>%
     mutate(season_year = i)
 
   tmp2 <- getDatafromWebsite(pull_scoring(season_year = i)) %>%
     select(TEAM_ID, `FGA_2PT%` = PCT_FGA_2PT, `FGA_3PT%` = PCT_FGA_3PT, `MR_PTS%` = PCT_PTS_2PT_MR,
            `FB_PTS%` = PCT_PTS_FB, `FT_PTS%` = PCT_PTS_FT, `OFF_TOV_PTS%` = PCT_PTS_OFF_TOV,
-           `PAINT_PTS%` = PCT_PTS_PAINT, `AST_2PM%` = PCT_AST_2PM, `AST_3PM%` =  PCT_AST_3PM)
+           `PAINT_PTS%` = PCT_PTS_PAINT, `AST_2PM%` = PCT_AST_2PM, `AST_3PM%` =  PCT_AST_3PM,
+           `UAST_FGM%` = PCT_UAST_FGM)
 
   tmp3 <- getDatafromWebsite(pull_four_factors(season_year = i)) %>%
-    select(TEAM_ID, `Opp_eFG%` = OPP_EFG_PCT, `OPP_FTr`= OPP_FTA_RATE)
+    select(TEAM_ID, `Opp_eFG%` = OPP_EFG_PCT, `OPP_FTr`= OPP_FTA_RATE, `FTr`= FTA_RATE)
 
-  tmp4 <- getDatafromWebsite(pull_violations(season_year = i)) %>%
-    select(TEAM_ID, SHOT_CLOCK, OFF_FOUL, EIGHT_SEC, CHARGE)
+  # tmp4 <- getDatafromWebsite(pull_violations(season_year = i)) %>%
+  #   select(TEAM_ID, SHOT_CLOCK, OFF_FOUL, EIGHT_SEC, CHARGE)
 
   tmp <- tmp %>%
     left_join(tmp2, by = "TEAM_ID") %>%
-    left_join(tmp3, by = "TEAM_ID") %>%
-    left_join(tmp4, by = "TEAM_ID")
+    left_join(tmp3, by = "TEAM_ID") #%>%
+    #left_join(tmp4, by = "TEAM_ID")
 
   final_data <- final_data %>%
     bind_rows(tmp)
+
+  tmp <- c()
+  tmp2 <- c()
+  tmp3 <- c()
+  #tmp4 <- c()
 }
-
-
 
 
 season_data <- final_data %>%
@@ -163,17 +169,18 @@ for (i in list_of_seasons){
   tmp1 <- getDatafromWebsite(pull_boxscore(season_year = i, league_id = "00")) %>%
     select(TEAM_ID, `W%` = W_PCT, ORTG = E_OFF_RATING, DRTG = E_DEF_RATING, NRTG = E_NET_RATING, AST_TO,
            `OREB%` = OREB_PCT, Pace = E_PACE, `TOV%` = TM_TOV_PCT, `eFG%` = EFG_PCT, `TS%` = TS_PCT,
-           `REB%` = REB_PCT, `DREB%` = DREB_PCT,`OREB%` = OREB_PCT) %>%
+           `REB%` = REB_PCT, `DREB%` = DREB_PCT,`OREB%` = OREB_PCT, `AST%` = AST_PCT) %>%
     #select(TEAM_ID, W_PCT:PTS) %>%
     mutate(season_year = i)
 
   tmp2 <- getDatafromWebsite(pull_scoring(season_year = i, league_id = "00")) %>%
     select(TEAM_ID, `FGA_2PT%` = PCT_FGA_2PT, `FGA_3PT%` = PCT_FGA_3PT, `MR_PTS%` = PCT_PTS_2PT_MR,
            `FB_PTS%` = PCT_PTS_FB, `FT_PTS%` = PCT_PTS_FT, `OFF_TOV_PTS%` = PCT_PTS_OFF_TOV,
-           `PAINT_PTS%` = PCT_PTS_PAINT, `AST_2PM%` = PCT_AST_2PM, `AST_3PM%` =  PCT_AST_3PM)
+           `PAINT_PTS%` = PCT_PTS_PAINT, `AST_2PM%` = PCT_AST_2PM, `AST_3PM%` =  PCT_AST_3PM,
+           `UAST_FGM%` = PCT_UAST_FGM)
 
   tmp3 <- getDatafromWebsite(pull_four_factors(season_year = i, league_id = "00")) %>%
-    select(TEAM_ID, `Opp_eFG%` = OPP_EFG_PCT, `OPP_FTr`= OPP_FTA_RATE)
+    select(TEAM_ID, `Opp_eFG%` = OPP_EFG_PCT, `OPP_FTr`= OPP_FTA_RATE, `FTr`= FTA_RATE)
 
   tmp4 <- getDatafromWebsite(pull_violations(season_year = i, league_id = "00")) %>%
     select(TEAM_ID, SHOT_CLOCK, OFF_FOUL, EIGHT_SEC, CHARGE)
@@ -186,6 +193,12 @@ for (i in list_of_seasons){
 
   nba_final_data <- nba_final_data %>%
     bind_rows(tmp)
+
+  tmp <- c()
+  tmp1 <- c()
+  tmp2 <- c()
+  tmp3 <- c()
+  tmp4 <- c()
 }
 
 nba_season_data <- nba_final_data %>%
