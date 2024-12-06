@@ -3,21 +3,32 @@ library(tidyverse)
 # Step 1: Load Data
 source(here::here('Utlis', 'data_pull.R'))
 
+final_data <- final_data %>%
+  group_by(TEAM_ID, season_year) %>%
+  mutate(adj_dvi = (1-`Opp_eFG%`)*.4 + `DREB%` * 0.3 + STL * 0.1 + BLK * 0.2) %>%
+  ungroup()
+
 gl_playing_styles <- final_data %>%
+  group_by(TEAM_ID, season_year) %>%
   mutate(
-    play_style = case_when(
+    off_play_style = case_when(
       Pace > 100 & `FB_PTS%` > .15 ~ "Fast-Paced",
-      DRTG < 105 & `DREB%` > .75 ~ "Defensive-Oriented",
       `FGA_3PT%` > 0.4 ~ "Three-Point Heavy",
       `UAST_FGM%` > .10 & `AST%` < .50 ~ "Iso-Heavy", # Unassisted 2PM% as an iso proxy?
       `PAINT_PTS%` > .50 & `OREB%` > .30 ~ "Big-Man Centric",
       `AST%` > .60 ~ "Motion Offense",
-      `Opp_eFG%` < .5 ~ "Switch-Heavy Defense",
       `PAINT_PTS%` > .4 &  FTr > .35 ~ "Post-Up and Inside",
-      DRTG < 110 & `OREB%` > .30 ~ "Grit-and-Grind",
+      TRUE ~ "Balanced/Adaptive"  # Default
+    ),
+    def_play_style = case_when(
+       DRTG < 105 & `DREB%` > .6 ~ "Defensive-Oriented",
+      `Opp_eFG%` < .5 & DRTG < 110 & adj_dvi > 2.0 ~ "Switch-Heavy Defense",
+      Pace < 95 & DRTG < 110 & `OREB%` > .30 ~ "Grit-and-Grind",
       TRUE ~ "Balanced/Adaptive"  # Default
     )
-  )
+  ) %>%
+  ungroup() %>%
+  select(TEAM_ID, season_year, off_play_style, def_play_style)
 
 lag_gl_data <- create_lag_3_years(gl_playing_styles, 'play_style') %>%
   filter(season_year == '2023-24')

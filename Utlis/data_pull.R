@@ -29,6 +29,14 @@ pull_four_factors <- function(season_type = "Regular+Season", season_year = "202
   return(url)
 }
 
+pull_defense <- function(season_type = "Regular+Season", season_year = "2023-24", league_id = "20"){
+  url <- paste('https://stats.gleague.nba.com/stats/leaguedashteamstatscombined?Conference=&DateFrom=&DateTo=&Division=&GameScope=&GameSegment=&LastNGames=0&LeagueID=',
+               league_id, '&Location=&MeasureType=Defense&Month=0&OpponentTeamID=0&Outcome=&PORound=0&PaceAdjust=N&PerMode=PerGame&Period=0&PlayerExperience=&PlayerPosition=&PlusMinus=N&Rank=N&Season=',
+               season_year,'&SeasonSegment=&SeasonType=',
+               season_type ,'&ShotClockRange=&StarterBench=&TeamID=0&TwoWay=0&VsConference=&VsDivision=',sep='')
+  return(url)
+}
+
 pull_boxscore <- function(season_type = "Regular+Season", season_year = "2023-24", league_id = "20"){
   url <- paste('https://stats.gleague.nba.com/stats/leaguedashteamstatscombined?Conference=&DateFrom=&DateTo=&Division=&GameScope=&GameSegment=&LastNGames=0&LeagueID=',league_id,
                '&Location=&MeasureType=Advanced&Month=0&OpponentTeamID=0&Outcome=&PORound=0&PaceAdjust=N&PerMode=PerGame&Period=0&PlayerExperience=&PlayerPosition=&PlusMinus=N&Rank=N&Season=',
@@ -121,22 +129,33 @@ for (i in list_of_seasons){
     #select(TEAM_ID, W_PCT:PTS) %>%
     mutate(season_year = i)
 
+  Sys.sleep(2)
+
   tmp2 <- getDatafromWebsite(pull_scoring(season_year = i)) %>%
     select(TEAM_ID, `FGA_2PT%` = PCT_FGA_2PT, `FGA_3PT%` = PCT_FGA_3PT, `MR_PTS%` = PCT_PTS_2PT_MR,
            `FB_PTS%` = PCT_PTS_FB, `FT_PTS%` = PCT_PTS_FT, `OFF_TOV_PTS%` = PCT_PTS_OFF_TOV,
            `PAINT_PTS%` = PCT_PTS_PAINT, `AST_2PM%` = PCT_AST_2PM, `AST_3PM%` =  PCT_AST_3PM,
            `UAST_FGM%` = PCT_UAST_FGM)
 
+  Sys.sleep(2)
+
   tmp3 <- getDatafromWebsite(pull_four_factors(season_year = i)) %>%
     select(TEAM_ID, `Opp_eFG%` = OPP_EFG_PCT, `OPP_FTr`= OPP_FTA_RATE, `FTr`= FTA_RATE)
 
+  Sys.sleep(2)
+
+  tmp4 <- getDatafromWebsite(pull_defense(season_year = i)) %>%
+    select(TEAM_ID, STL, BLK) %>%
+    mutate(DefVersatilityIndex = 0.5 * STL + 0.5 * BLK)
+
+  # Sys.sleep(2)
   # tmp4 <- getDatafromWebsite(pull_violations(season_year = i)) %>%
   #   select(TEAM_ID, SHOT_CLOCK, OFF_FOUL, EIGHT_SEC, CHARGE)
 
   tmp <- tmp %>%
     left_join(tmp2, by = "TEAM_ID") %>%
-    left_join(tmp3, by = "TEAM_ID") #%>%
-    #left_join(tmp4, by = "TEAM_ID")
+    left_join(tmp3, by = "TEAM_ID") %>%
+    left_join(tmp4, by = "TEAM_ID")
 
   final_data <- final_data %>%
     bind_rows(tmp)
@@ -144,9 +163,8 @@ for (i in list_of_seasons){
   tmp <- c()
   tmp2 <- c()
   tmp3 <- c()
-  #tmp4 <- c()
+  tmp4 <- c()
 }
-
 
 season_data <- final_data %>%
   mutate(league_type = "G-League") %>%
