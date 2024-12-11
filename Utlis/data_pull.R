@@ -54,7 +54,7 @@ pull_violations <- function(season_type = "Regular+Season", season_year = "2023-
 }
 
 getDatafromWebsite <- function(url_link){
-  res <- httr::GET(url = url_link, timeout(3))
+  res <- httr::GET(url = url_link, timeout(60))
   data <- httr::content(res) %>% .[['resultSets']] %>% .[[1]]
   column_names <- data$headers %>% as.character()
   dt <- rbindlist(data$rowSet) %>% setnames(column_names)
