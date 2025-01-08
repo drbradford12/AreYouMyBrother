@@ -1,0 +1,209 @@
+Season,Gleague_Team,DL Abbrev,GL_TeamID,NBA_Team,NBA_Abb,Two_Ways
+2014-15,Maine Red Claws,MNE,1612709919,Boston Celtics,BOS,Assign Only
+2014-15,Canton Charge,CTN,1612709911,Cleveland Cavaliers,CLE,Assign Only
+2014-15,Texas Legends,TEX,1612709925,Dallas Mavericks,DAL,Assign Only
+2014-15,Grand Rapids Drive,GRD,1612709915,Detroit Pistons,DET,Assign Only
+2014-15,Santa Cruz Warriors,SCW,1612709923,Golden State Warriors,GSW,Assign Only
+2014-15,Rio Grande Valley Vipers,RGV,1612709922,Houston Rockets,HOU,Assign Only
+2014-15,Los Angeles D-Fenders,LAD,1612709918,Los Angeles Lakers,LAL,Assign Only
+2014-15,Iowa Energy,IWA,1612709917,Memphis Grizzlies,MEM,Assign Only
+2014-15,Sioux Falls Skyforce,SFL,1612709924,Miami Heat,MIA,Assign Only
+2014-15,Westchester Knicks,WES,1612709926,New York Knicks,NYK,Assign Only
+2014-15,Oklahoma City Blue,OKL,1612709920,Oklahoma City Thunder,OKC,Assign Only
+2014-15,Erie BayHawks,ERI,1612709913,Orlando Magic,ORL,Assign Only
+2014-15,Delaware 87ers,DEL,1612709912,Philadelphia 76ers,PHL,Assign Only
+2014-15,Bakersfield Jam,BAK,1612709910,Phoenix Suns,PHX,Assign Only
+2014-15,Reno Bighorns,RNO,1612709921,Sacramento Kings,SAC,Assign Only
+2014-15,Austin Spurs,AUS,1612709909,San Antonio Spurs,SAS,Assign Only
+2014-15,Idaho Stampede,IDA,1612709916,Utah Jazz,UTA,Assign Only
+2014-15,Fort Wayne Mad Ants,FWN,1612709914,Multi-affiliate,,Assign Only
+2015-16,Maine Red Claws,MNE,1612709919,Boston Celtics,BOS,Assign Only
+2015-16,Canton Charge,CTN,1612709911,Cleveland Cavaliers,CLE,Assign Only
+2015-16,Texas Legends,TEX,1612709925,Dallas Mavericks,DAL,Assign Only
+2015-16,Grand Rapids Drive,GRD,1612709915,Detroit Pistons,DET,Assign Only
+2015-16,Santa Cruz Warriors,SCW,1612709923,Golden State Warriors,GSW,Assign Only
+2015-16,Rio Grande Valley Vipers,RGV,1612709922,Houston Rockets,HOU,Assign Only
+2015-16,Fort Wayne Mad Ants,FWN,1612709914,Indiana Pacers,IND,Assign Only
+2015-16,Los Angeles D-Fenders,LAD,1612709918,Los Angeles Lakers,LAL,Assign Only
+2015-16,Iowa Energy,IWA,1612709917,Memphis Grizzlies,MEM,Assign Only
+2015-16,Sioux Falls Skyforce,SFL,1612709924,Miami Heat,MIA,Assign Only
+2015-16,Westchester Knicks,WES,1612709926,New York Knicks,NYK,Assign Only
+2015-16,Oklahoma City Blue,OKL,1612709920,Oklahoma City Thunder,OKC,Assign Only
+2015-16,Erie BayHawks,ERI,1612709913,Orlando Magic,ORL,Assign Only
+2015-16,Delaware 87ers,DEL,1612709912,Philadelphia 76ers,PHL,Assign Only
+2015-16,Bakersfield Jam,BAK,1612709910,Phoenix Suns,PHX,Assign Only
+2015-16,Reno Bighorns,RNO,1612709921,Sacramento Kings,SAC,Assign Only
+2015-16,Austin Spurs,AUS,1612709909,San Antonio Spurs,SAS,Assign Only
+2015-16,Idaho Stampede,IDA,1612709916,Utah Jazz,UTA,Assign Only
+2016-17,Maine Red Claws,MNE,1612709919,Boston Celtics,BOS,Assign Only
+2016-17,Greensboro Swarm,GBO,1612709927,Charlotte Hornets,CHA,Assign Only
+2016-17,Windy City Bulls,WCB,1612709931,Chicago Bulls,CHI,Assign Only
+2016-17,Canton Charge,CTN,1612709911,Cleveland Cavaliers,CLE,Assign Only
+2016-17,Texas Legends,TEX,1612709925,Dallas Mavericks,DAL,Assign Only
+2016-17,Grand Rapids Drive,GRD,1612709915,Detroit Pistons,DET,Assign Only
+2016-17,Santa Cruz Warriors,SCW,1612709923,Golden State Warriors,GSW,Assign Only
+2016-17,Rio Grande Valley Vipers,RGV,1612709922,Houston Rockets,HOU,Assign Only
+2016-17,Fort Wayne Mad Ants,FWN,1612709914,Indiana Pacers,IND,Assign Only
+2016-17,Los Angeles D-Fenders,LAD,1612709918,Los Angeles Lakers,LAL,Assign Only
+2016-17,Iowa Energy,IWA,1612709917,Memphis Grizzlies,MEM,Assign Only
+2016-17,Sioux Falls Skyforce,SFL,1612709924,Miami Heat,MIA,Assign Only
+2016-17,Westchester Knicks,WES,1612709926,New York Knicks,NYK,Assign Only
+2016-17,Oklahoma City Blue,OKL,1612709920,Oklahoma City Thunder,OKC,Assign Only
+2016-17,Erie BayHawks,ERI,1612709913,Orlando Magic,ORL,Assign Only
+2016-17,Delaware 87ers,DEL,1612709912,Philadelphia 76ers,PHL,Assign Only
+2016-17,Northern Arizona Suns,NAS,1612709930,Phoenix Suns,PHX,Assign Only
+2016-17,Reno Bighorns,RNO,1612709921,Sacramento Kings,SAC,Assign Only
+2016-17,Austin Spurs,AUS,1612709909,San Antonio Spurs,SAS,Assign Only
+2017-18,Erie BayHawks,ERI,1612709913,Atlanta Hawks,ATL,Two
+2017-18,Long Island Nets,LIN,1612709935,Brooklyn Nets,BKN,Two
+2017-18,Maine Red Claws,MNE,1612709919,Boston Celtics,BOS,Two
+2017-18,Greensboro Swarm,GBO,1612709927,Charlotte Hornets,CHA,Two
+2017-18,Windy City Bulls,WCB,1612709931,Chicago Bulls,CHI,Two
+2017-18,Canton Charge,CTN,1612709911,Cleveland Cavaliers,CLE,Two
+2017-18,Texas Legends,TEX,1612709925,Dallas Mavericks,DAL,Two
+2017-18,Grand Rapids Drive,GRD,1612709915,Detroit Pistons,DET,Two
+2017-18,Santa Cruz Warriors,SCW,1612709923,Golden State Warriors,GSW,Two
+2017-18,Rio Grande Valley Vipers,RGV,1612709922,Houston Rockets,HOU,Two
+2017-18,Fort Wayne Mad Ants,FWN,1612709914,Indiana Pacers,IND,Two
+2017-18,Agua Caliente Clippers,ACC,1612709932,Los Angeles Clippers,LAC,Two
+2017-18,South Bay Lakers,SBL,1612709938,Los Angeles Lakers,LAL,Two
+2017-18,Memphis Hustle,MHU,1612709936,Memphis Grizzlies,MEM,Two
+2017-18,Sioux Falls Skyforce,SFL,1612709924,Miami Heat,MIA,Two
+2017-18,Wisconsin Herd,WIS,1612709939,Milwaukee Bucks,MIL,Two
+2017-18,Iowa Wolves,IOW,1612709933,Minnesota Timberwolves,MIN,Two
+2017-18,Westchester Knicks,WES,1612709926,New York Knicks,NYK,Two
+2017-18,Oklahoma City Blue,OKL,1612709920,Oklahoma City Thunder,OKC,Two
+2017-18,Lakeland Magic,LAK,1612709934,Orlando Magic,ORL,Two
+2017-18,Delaware Blue Coats,DEL,1612709912,Philadelphia 76ers,PHL,Two
+2017-18,Northern Arizona Suns,NAS,1612709930,Phoenix Suns,PHX,Two
+2017-18,Austin Spurs,AUS,1612709909,San Antonio Spurs,SAS,Two
+2017-18,Raptors 905,RAP,1612709937,Toronto Raptors,TOR,Two
+2018-19,Erie BayHawks,ERI,1612709913,Atlanta Hawks,ATL,Two
+2018-19,Long Island Nets,LIN,1612709935,Brooklyn Nets,BKN,Two
+2018-19,Maine Red Claws,MNE,1612709919,Boston Celtics,BOS,Two
+2018-19,Greensboro Swarm,GBO,1612709927,Charlotte Hornets,CHA,Two
+2018-19,Windy City Bulls,WCB,1612709931,Chicago Bulls,CHI,Two
+2018-19,Canton Charge,CTN,1612709911,Cleveland Cavaliers,CLE,Two
+2018-19,Texas Legends,TEX,1612709925,Dallas Mavericks,DAL,Two
+2018-19,Grand Rapids Drive,GRD,1612709915,Detroit Pistons,DET,Two
+2018-19,Santa Cruz Warriors,SCW,1612709923,Golden State Warriors,GSW,Two
+2018-19,Rio Grande Valley Vipers,RGV,1612709922,Houston Rockets,HOU,Two
+2018-19,Fort Wayne Mad Ants,FWN,1612709914,Indiana Pacers,IND,Two
+2018-19,Agua Caliente Clippers,ACC,1612709932,Los Angeles Clippers,LAC,Two
+2018-19,South Bay Lakers,SBL,1612709938,Los Angeles Lakers,LAL,Two
+2018-19,Memphis Hustle,MHU,1612709936,Memphis Grizzlies,MEM,Two
+2018-19,Sioux Falls Skyforce,SFL,1612709924,Miami Heat,MIA,Two
+2018-19,Wisconsin Herd,WIS,1612709939,Milwaukee Bucks,MIL,Two
+2018-19,Iowa Wolves,IOW,1612709933,Minnesota Timberwolves,MIN,Two
+2018-19,Westchester Knicks,WES,1612709926,New York Knicks,NYK,Two
+2018-19,Oklahoma City Blue,OKL,1612709920,Oklahoma City Thunder,OKC,Two
+2018-19,Lakeland Magic,LAK,1612709934,Orlando Magic,ORL,Two
+2018-19,Delaware Blue Coats,DEL,1612709912,Philadelphia 76ers,PHL,Two
+2018-19,Northern Arizona Suns,NAS,1612709930,Phoenix Suns,PHX,Two
+2018-19,Stockton Kings,STO,1612709942,Sacramento Kings,SAC,Two
+2018-19,Austin Spurs,AUS,1612709909,San Antonio Spurs,SAS,Two
+2018-19,Raptors 905,RAP,1612709937,Toronto Raptors,TOR,Two
+2018-19,Salt Lake City Stars,SLC,1612709941,Utah Jazz,UTA,Two
+2018-19,Capital City Go-Go,CCG,1612709940,Washington Wizards,WAS,Two
+2019-20,Long Island Nets,LIN,1612709935,Brooklyn Nets,BKN,Two
+2019-20,Maine Red Claws,MNE,1612709919,Boston Celtics,BOS,Two
+2019-20,Greensboro Swarm,GBO,1612709927,Charlotte Hornets,CHA,Two
+2019-20,Windy City Bulls,WCB,1612709931,Chicago Bulls,CHI,Two
+2019-20,Canton Charge,CTN,1612709911,Cleveland Cavaliers,CLE,Two
+2019-20,Texas Legends,TEX,1612709925,Dallas Mavericks,DAL,Two
+2019-20,Grand Rapids Drive,GRD,1612709915,Detroit Pistons,DET,Two
+2019-20,Santa Cruz Warriors,SCW,1612709923,Golden State Warriors,GSW,Two
+2019-20,Rio Grande Valley Vipers,RGV,1612709922,Houston Rockets,HOU,Two
+2019-20,Fort Wayne Mad Ants,FWN,1612709914,Indiana Pacers,IND,Two
+2019-20,Agua Caliente Clippers,ACC,1612709932,Los Angeles Clippers,LAC,Two
+2019-20,South Bay Lakers,SBL,1612709938,Los Angeles Lakers,LAL,Two
+2019-20,Memphis Hustle,MHU,1612709936,Memphis Grizzlies,MEM,Two
+2019-20,Sioux Falls Skyforce,SFL,1612709924,Miami Heat,MIA,Two
+2019-20,Wisconsin Herd,WIS,1612709939,Milwaukee Bucks,MIL,Two
+2019-20,Iowa Wolves,IOW,1612709933,Minnesota Timberwolves,MIN,Two
+2019-20,Erie BayHawks,ERI,1612709913,New Orleans Pelicans,NOP,Two
+2019-20,Westchester Knicks,WES,1612709926,New York Knicks,NYK,Two
+2019-20,Oklahoma City Blue,OKL,1612709920,Oklahoma City Thunder,OKC,Two
+2019-20,Lakeland Magic,LAK,1612709934,Orlando Magic,ORL,Two
+2019-20,Delaware Blue Coats,DEL,1612709912,Philadelphia 76ers,PHL,Two
+2019-20,Northern Arizona Suns,NAS,1612709930,Phoenix Suns,PHX,Two
+2019-20,Stockton Kings,STO,1612709942,Sacramento Kings,SAC,Two
+2019-20,Austin Spurs,AUS,1612709909,San Antonio Spurs,SAS,Two
+2019-20,Raptors 905,RAP,1612709937,Toronto Raptors,TOR,Two
+2019-20,Salt Lake City Stars,SLC,1612709941,Utah Jazz,UTA,Two
+2019-20,Capital City Go-Go,CCG,1612709940,Washington Wizards,WAS,Two
+2020-21,Long Island Nets,LIN,1612709935,Brooklyn Nets,BKN,Two
+2020-21,Greensboro Swarm,GBO,1612709927,Charlotte Hornets,CHA,Two
+2020-21,Canton Charge,CTN,1612709911,Cleveland Cavaliers,CLE,Two
+2020-21,Santa Cruz Warriors,SCW,1612709923,Golden State Warriors,GSW,Two
+2020-21,Rio Grande Valley Vipers,RGV,1612709922,Houston Rockets,HOU,Two
+2020-21,Fort Wayne Mad Ants,FWN,1612709914,Indiana Pacers,IND,Two
+2020-21,Agua Caliente Clippers,ACC,1612709932,Los Angeles Clippers,LAC,Two
+2020-21,Memphis Hustle,MHU,1612709936,Memphis Grizzlies,MEM,Two
+2020-21,Sioux Falls Skyforce,SFL,1612709924,Miami Heat,MIA,Two
+2020-21,Iowa Wolves,IOW,1612709933,Minnesota Timberwolves,MIN,Two
+2020-21,Erie BayHawks,ERI,1612709913,New Orleans Pelicans,NOP,Two
+2020-21,Westchester Knicks,WES,1612709926,New York Knicks,NYK,Two
+2020-21,Oklahoma City Blue,OKL,1612709920,Oklahoma City Thunder,OKC,Two
+2020-21,Lakeland Magic,LAK,1612709934,Orlando Magic,ORL,Two
+2020-21,Delaware Blue Coats,DEL,1612709912,Philadelphia 76ers,PHL,Two
+2020-21,Austin Spurs,AUS,1612709909,San Antonio Spurs,SAS,Two
+2020-21,Raptors 905,RAP,1612709937,Toronto Raptors,TOR,Two
+2020-21,Salt Lake City Stars,SLC,1612709941,Utah Jazz,UTA,Two
+2020-21,Capital City Go-Go,CCG,1612709940,Washington Wizards,WAS,Two
+2020-21,G League Ignite,IGN,1612710000,None (Developmental Team),,Two
+2021-22,Long Island Nets,LIN,1612709935,Brooklyn Nets,BKN,Two
+2021-22,Maine Celtics,MNE,1612709919,Boston Celtics,BOS,Two
+2021-22,Greensboro Swarm,GBO,1612709927,Charlotte Hornets,CHA,Two
+2021-22,Windy City Bulls,WCB,1612709931,Chicago Bulls,CHI,Two
+2021-22,Cleveland Charge,CLE,1612710001,Cleveland Cavaliers,CLE,Two
+2021-22,Texas Legends,TEX,1612709925,Dallas Mavericks,DAL,Two
+2021-22,Grand Rapids Gold,GRG,1612710002,Denver Nuggets,DEN,Two
+2021-22,Motor City Cruise,MOT,1612710003,Detroit Pistons,DET,Two
+2021-22,Santa Cruz Warriors,SCW,1612709923,Golden State Warriors,GSW,Two
+2021-22,Rio Grande Valley Vipers,RGV,1612709922,Houston Rockets,HOU,Two
+2021-22,Fort Wayne Mad Ants,FWN,1612709914,Indiana Pacers,IND,Two
+2021-22,Agua Caliente Clippers,ACC,1612709932,Los Angeles Clippers,LAC,Two
+2021-22,South Bay Lakers,SBL,1612709938,Los Angeles Lakers,LAL,Two
+2021-22,Memphis Hustle,MHU,1612709936,Memphis Grizzlies,MEM,Two
+2021-22,Sioux Falls Skyforce,SFL,1612709924,Miami Heat,MIA,Two
+2021-22,Wisconsin Herd,WIS,1612709939,Milwaukee Bucks,MIL,Two
+2021-22,Iowa Wolves,IOW,1612709933,Minnesota Timberwolves,MIN,Two
+2021-22,Westchester Knicks,WES,1612709926,New York Knicks,NYK,Two
+2021-22,Oklahoma City Blue,OKL,1612709920,Oklahoma City Thunder,OKC,Two
+2021-22,Lakeland Magic,LAK,1612709934,Orlando Magic,ORL,Two
+2021-22,Delaware Blue Coats,DEL,1612709912,Philadelphia 76ers,PHL,Two
+2021-22,Stockton Kings,STO,1612709942,Sacramento Kings,SAC,Two
+2021-22,Austin Spurs,AUS,1612709909,San Antonio Spurs,SAS,Two
+2021-22,Raptors 905,RAP,1612709937,Toronto Raptors,TOR,Two
+2021-22,Salt Lake City Stars,SLC,1612709941,Utah Jazz,UTA,Two
+2021-22,Capital City Go-Go,CCG,1612709940,Washington Wizards,WAS,Two
+2021-22,G League Ignite,IGN,1612710000,None (Developmental Team),,Two
+2022-23,Long Island Nets,LIN,1612709935,Brooklyn Nets,BKN,Two
+2022-23,Maine Celtics,MNE,1612709919,Boston Celtics,BOS,Two
+2022-23,Greensboro Swarm,GBO,1612709927,Charlotte Hornets,CHA,Two
+2022-23,Windy City Bulls,WCB,1612709931,Chicago Bulls,CHI,Two
+2022-23,Cleveland Charge,CLE,1612710001,Cleveland Cavaliers,CLE,Two
+2022-23,Texas Legends,TEX,1612709925,Dallas Mavericks,DAL,Two
+2022-23,Grand Rapids Gold,GRG,1612710002,Denver Nuggets,DEN,Two
+2022-23,Motor City Cruise,MOT,1612710003,Detroit Pistons,DET,Two
+2022-23,Santa Cruz Warriors,SCW,1612709923,Golden State Warriors,GSW,Two
+2022-23,Rio Grande Valley Vipers,RGV,1612709922,Houston Rockets,HOU,Two
+2022-23,Fort Wayne Mad Ants,FWN,1612709914,Indiana Pacers,IND,Two
+2022-23,Agua Caliente Clippers,ACC,1612709932,Los Angeles Clippers,LAC,Two
+2022-23,South Bay Lakers,SBL,1612709938,Los Angeles Lakers,LAL,Two
+2022-23,Memphis Hustle,MHU,1612709936,Memphis Grizzlies,MEM,Two
+2022-23,Sioux Falls Skyforce,SFL,1612709924,Miami Heat,MIA,Two
+2022-23,Wisconsin Herd,WIS,1612709939,Milwaukee Bucks,MIL,Two
+2022-23,Iowa Wolves,IOW,1612709933,Minnesota Timberwolves,MIN,Two
+2022-23,Westchester Knicks,WES,1612709926,New York Knicks,NYK,Two
+2022-23,Oklahoma City Blue,OKL,1612709920,Oklahoma City Thunder,OKC,Two
+2022-23,Lakeland Magic,LAK,1612709934,Orlando Magic,ORL,Two
+2022-23,Delaware Blue Coats,DEL,1612709912,Philadelphia 76ers,PHL,Two
+2022-23,Stockton Kings,STO,1612709942,Sacramento Kings,SAC,Two
+2022-23,Austin Spurs,AUS,1612709909,San Antonio Spurs,SAS,Two
+2022-23,Raptors 905,RAP,1612709937,Toronto Raptors,TOR,Two
+2022-23,Salt Lake City Stars,SLC,1612709941,Utah Jazz,UTA,Two
+2022-23,Capital City Go-Go,CCG,1612709940,Washington Wizards,WAS,Two
+2022-23,G League Ignite,IGN,1612710000,None (Developmental Team),,Two
+2022-23,Mexico City Capitanes,MEX,1612710004,None,,Two
