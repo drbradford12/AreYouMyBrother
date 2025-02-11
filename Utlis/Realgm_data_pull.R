@@ -14,7 +14,7 @@ getDatafromWebsite <- function(url_link){
 }
 
 # Define the URL of the page you want to scrape
-assign_url <- "https://basketball.realgm.com/gleague/transactions/assignments/2024"
+assign_url <- "https://basketball.realgm.com/gleague/transactions/assignments"
 nba_player_url <- "https://stats.gleague.nba.com/stats/leaguedashplayerstatscombined?College=&Conference=&Country=&DateFrom=&DateTo=&Division=&DraftPick=&DraftYear=&GameScope=&GameSegment=&Height=&LastNGames=0&LeagueID=20&Location=&MeasureType=Base&Month=0&OpponentTeamID=0&Outcome=&PORound=0&PaceAdjust=N&PerMode=PerGame&Period=0&PlayerExperience=&PlayerPosition=&PlusMinus=N&Rank=N&Season=2023-24&SeasonSegment=&SeasonType=Regular+Season&ShotClockRange=&StarterBench=&TeamID=0&TwoWay=0&VsConference=&VsDivision=&Weight="
 
 
@@ -28,6 +28,7 @@ stats_table <- webpage %>%
   html_table(fill = TRUE)  # Convert to a data frame
 
 assignment_players <- stats_table %>%
+  mutate(DaysAssigned = as.numeric(DaysAssigned)) %>%
   filter(DaysAssigned > 0) %>%
   unique()
 
