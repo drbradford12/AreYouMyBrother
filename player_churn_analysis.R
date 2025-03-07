@@ -11,6 +11,18 @@ g_league_players_clean <- g_league_player_data %>%
   dplyr::select(PLAYER_ID, PLAYER_NAME, AGE, GP, PTS, TS_PCT, draft_status, season) %>%
   mutate(League = "G-League")
 
+# Create the lag years for the seasons
+
+g_league_players_with_lags <- g_league_players_clean %>%
+  group_by(PLAYER_ID, PLAYER_NAME) %>%
+  arrange(season) %>%
+  rename(age = AGE, gp = GP, pts = PTS, ts_pct = TS_PCT) %>%
+  mutate(across(c(age, gp, pts, ts_pct, season),
+                list(glg_yr_lag1 = ~lag(., 1),
+                     glg_yr_lag2 = ~lag(., 2)), .names = "{.col}_{.fn}")) %>%
+  ungroup() %>%
+  filter(!is.na(PLAYER_NAME), !is.na(PLAYER_ID))
+
 # Clean NBA player data
 nba_players_clean <- nba_league_player_data %>%
   mutate(draft_status = ifelse(DRAFT_YEAR == "Undrafted", 0, 1)) %>%
@@ -18,15 +30,15 @@ nba_players_clean <- nba_league_player_data %>%
   mutate(League = "NBA")
 
 # Combine both datasets
-combined_players <- bind_rows(g_league_players_clean, nba_players_clean)
+combined_players <- g_league_players_clean %>%
+  bind_rows(nba_players_clean)
 
 combined_players_churn <- nba_players_clean %>% dplyr::select(-League) %>%
   rename(nba_gp = GP, nba_pts = PTS, nba_age = AGE, nba_ts_pct = TS_PCT, nba_season = season) %>%
-  left_join(g_league_players_clean %>% dplyr::select(-League), by = c("nba_season" = "season", "PLAYER_ID", "PLAYER_NAME"))
+  left_join(g_league_players_with_lags %>% dplyr::select(-League, -draft_status),
+            by = c("nba_season" = "season", "PLAYER_ID", "PLAYER_NAME")) %>%
+  rename(glg_gp = gp, glg_pts = pts, glg_age = age, glg_ts_pct = ts_pct)
 
-combined_players_churn$draft_status <- coalesce(combined_players_churn$`draft_status.x`, combined_players_churn$`draft_status.y`)
-
-combined_players_churn <- combined_players_churn %>% dplyr::select(-c(`draft_status.x`, `draft_status.y`))
 
 # Extract the year from the Season column (assuming format "YYYY-YY")
 combined_players <- combined_players %>%
@@ -66,7 +78,8 @@ set.seed(123)
 # Simulate churn based on performance metrics
 combined_players_churn <- combined_players_churn %>%
   mutate(
-    churn = ifelse(nba_pts < 5 & nba_gp < 10 | GP < 30, 1, 0)  # Players with poor performance are more likely to churn
+    # Players with poor performance are more likely to churn
+    churn = ifelse(nba_pts < 5 & nba_gp < 10 & glg_age < 30, 1, 0)
   )
 
 
@@ -79,12 +92,13 @@ combined_players_churn <- combined_players_churn %>%
 combined_players_churn <- combined_players_churn %>%
   na.omit()
 
+# I think I want to change how this is partition based on the number of games. Maybe look into the number of starts?
 train_index <- createDataPartition(combined_players_churn$churn, p = 0.8, list = FALSE)
 train_data <- combined_players_churn[train_index, ]
 test_data <- combined_players_churn[-train_index, ]
 
 # Train a logistic regression model
-churn_model <- glm(churn ~ Years_in_G_League + nba_pts + nba_gp + nba_ts_pct + draft_status,
+churn_model <- glm(churn ~ Years_in_G_League + nba_pts + nba_gp + nba_ts_pct,
                    data = train_data, family = binomial)
 
 # Summarize the model
