@@ -5,14 +5,48 @@ library(rvest)
 
 source(here::here('Utlis', 'player_pull_data.R'))
 
+# Adding the winners for the regular season in the G
+nba_g_map_winners <- read.csv(here::here('ManualMapping', 'GLeague_to_NBA_map_winners.csv'), header=TRUE)
+historical_nba_g_map <- read.csv(here::here('ManualMapping', 'Historical G-League Mapping.csv'), header=TRUE)
+
+map <- historical_nba_g_map %>%
+  mutate(Year = as.numeric(substr(Season, 1, 4))) %>%
+  select(Year, DL.Abbrev, GL_TeamID)
+
+g_league_reg_winners <- nba_g_map_winners %>%
+  select(Year,gl_champs = GL.Champions) %>%
+  mutate(season_champs = 1,
+         # The initial Year is incorrect for the champs for the season
+         Year = (Year - 1))
+
+g_league_reg_runnerups <- nba_g_map_winners %>%
+  select(Year, gl_runnerup = GL.RunnerUp)  %>%
+  mutate(season_runnerups = 1,
+         # The initial Year is incorrect for the runner ups for the season
+         Year = (Year - 1))
+
+teams_data <- g_league_player_data %>%
+  mutate(Year = as.numeric(substr(season, 1, 4))) %>%
+  select(TEAM_ABBREVIATION, TEAM_ID, Year, season) %>%
+  unique() %>%
+  full_join(map, by = c("Year", "TEAM_ID" = "GL_TeamID")) %>%
+  filter(!is.na(TEAM_ABBREVIATION))
+
+teams_table_results <- teams_data %>%
+  left_join(g_league_reg_winners, by = c("Year", "TEAM_ABBREVIATION" = "gl_champs")) %>%
+  mutate(season_champs = ifelse(is.na(season_champs), 0, 1)) %>%
+  left_join(g_league_reg_runnerups, by = c("Year", "TEAM_ABBREVIATION" = "gl_runnerup")) %>%
+  mutate(season_runnerups = ifelse(is.na(season_runnerups), 0, 1))
+
+
 # Clean G-League player data
 g_league_players_clean <- g_league_player_data %>%
   mutate(draft_status = ifelse(DRAFT_YEAR == "Undrafted", 0, 1)) %>%
   dplyr::select(PLAYER_ID, PLAYER_NAME, AGE, GP, PTS, TS_PCT, draft_status, season) %>%
   mutate(League = "G-League")
 
-# Create the lag years for the seasons
 
+# Create the lag years for the seasons
 g_league_players_with_lags <- g_league_players_clean %>%
   group_by(PLAYER_ID, PLAYER_NAME) %>%
   arrange(season) %>%
